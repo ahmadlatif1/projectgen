@@ -1,0 +1,151 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+.border{
+
+    
+    border:12px;
+    
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+
+    border-style: ridge;
+    
+    border-color: rgb(133, 133, 133);
+    display: flex;
+    z-index: 2;
+
+
+    
+    }
+.boxbody{
+
+width: 800px;
+height: 400px;
+
+border-color: rgb(137, 137, 137);
+border:18px;
+
+border-top-width: 12px;
+border-bottom-width: 12px;
+
+
+border-style: inset;
+
+
+
+display: flex;
+
+flex-direction: column;
+align-items:stretch;
+
+
+
+
+    
+}
+
+.boxtop{
+height: 50px;
+background-color: var(--overlayColor);
+flex-grow: 1;
+font-size: large;
+
+
+}
+.slotsides{
+
+display: flex;
+
+}
+.slotrowrow{
+
+
+    row-gap: 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.slotrow{
+
+    
+    display: flex;
+
+}
+.slotcolumn{
+
+    background-color: var(--overlayColor);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    z-index: 2;
+    padding-inline: 5px;
+
+}
+.filler{
+
+    background-color: var(--overlayColor);
+    flex-grow: 1;
+    min-height: 40px;
+}
+.slotborder{
+
+border-style: inset;
+
+
+}
+app-slot{
+    
+    width: 100px;
+    height: 40px;
+
+    display: flex;
+    flex-direction: column;
+    
+    z-index: -2;
+}
+.boxbottom{
+
+    flex-grow: 2;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--overlayColor);
+
+
+}
+.boxbutton{
+
+height: 40px;
+background-color: rgb(192, 192, 192);
+border-color: rgb(137, 137, 137);
+
+border-width: 5px;
+border-style: outset ;
+font: var(--font);
+
+}
+.boxbutton:active{
+
+    border-style: inset;
+    
+    
+
+}
+.boxbutton:hover{
+
+    background-color: rgb(161, 161, 161);
+    
+
+}
