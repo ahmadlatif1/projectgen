@@ -9,6 +9,7 @@ import * as globals from '../globals';
       <div *ngIf="spun">
           <app-slot-element [ngStyle]="{'position':'absolute'}" [winner]="i+1==spinlist.length" *ngFor="let s of spinlist; index as i" [word]="s" [order]="i"></app-slot-element>
       </div>
+      <app-slot-element [ngStyle]="{'position':'absolute'}" ></app-slot-element>
      
 
     `

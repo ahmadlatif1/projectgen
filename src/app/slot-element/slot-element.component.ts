@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-slot-element',
   template:`
-    <div [ngClass]="getclass()" [style.animation]="getwinner()+' '+duration+'s'+' linear'" [style.animation-delay]="delay+'s'" >{{word}}</div>
+    <div [ngClass]="getclass()" [style.animation]="getwinner()+' '+duration+'s'+' linear forwards'" [style.animation-delay]="delay+'s'" >{{word}}</div>
   `,
   styles: [`
 
@@ -31,19 +31,23 @@ import { Component, OnInit, Input } from '@angular/core';
       justify-content:center;
       padding-left:5px;
       
+      opacity:0;
 
     }
     .winbox{
-
-      animation-fill-mode: forwards;
-      opacity: 1;
       color:seashell;
-
+      opacity:0;
     }
     .fillbox{
 
       opacity: 0;
 
+    }
+    .placeholder{
+
+      z-index:-3;
+      opacity:1;
+      
     }
 
     @keyframes fillerflip {
@@ -93,12 +97,14 @@ export class SlotElementComponent implements OnInit {
   
   @Input() winner:boolean=false;
 
+  
   duration=0.2
 
   delay=0
 
   getwinner(){
 
+    if(this.word=="")return ""
     if(this.winner)
     return"winnerflip"; else return"fillerflip"
 
@@ -106,8 +112,10 @@ export class SlotElementComponent implements OnInit {
 
   getclass(){
 
+    if(this.word=="")return "placeholder"
     if(this.winner)
     return"winbox"; else return "fillbox"
+
 
   }
 
@@ -115,7 +123,7 @@ export class SlotElementComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   // console.log("o")
+   console.log("\n o"+this.getwinner())
    this.delay=this.order*(this.duration/2)
    this.duration=this.duration-this.duration*Number(this.winner)*(0.5)
 

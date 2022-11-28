@@ -15,10 +15,14 @@ import { SlotComponent } from '../slot/slot.component';
       <div class="boxtop"> THE PROJECT IDEA MACHINE</div>
       
 
-      <div *ngFor="let stack of genstack, index as j">
+      <div class="slotbox" *ngFor="let stack of genstack, index as j">
         
+
+      <div class="filler" *ngIf="j==1&&stack.length"></div>
+
+
          <div class="slotrowrow">
-           <div class="filler"></div>
+           <div class="filler"  *ngIf="stack.length>1" ></div>
             <div class="slotrow" *ngFor="let substack of stack; index as i">
               
               <div class="slotcolumn">{{substack[0]}}</div>
@@ -30,13 +34,12 @@ import { SlotComponent } from '../slot/slot.component';
 
             </div>
 
-            <div class="slotcolumn"></div>
+            <div class="slotcolumn" *ngIf="stack.length>1" ></div>
 
 
-            <div class="filler"></div>
+            <div class="filler"  *ngIf="stack.length>1"></div>
 
         </div>
-        <div class="filler"></div>
 
       </div>
       <div class="boxbottom">
@@ -66,7 +69,7 @@ export class BoxoverlayComponent implements OnInit {
     this.spinstatus++
   }
 
-  machinedata=globals.machinedata.slice(0,3);
+  machinedata=globals.machinedata.slice(0,6);
 
   
 
