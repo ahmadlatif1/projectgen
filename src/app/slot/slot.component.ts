@@ -42,15 +42,21 @@ export class SlotComponent implements OnInit {
 
     for (const propName in changes) {
 
-      if(propName=="spinstatus"&&this.spinstatus>0){
-
+      if(propName=="spinstatus"){
         this.spun=false
         this.spinlist=[""]
         this.cdr.detectChanges();
-        this.spinlist=this.randomizewords(this.words,this.id)
-        this.spun=true
-      }
 
+        if (this.spinstatus>0){
+
+          this.spinlist=this.randomizewords(this.words,this.id)
+          this.spun=true
+          // console.log(this.spun+" AAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+        }
+
+        
+      }
 
     }
 

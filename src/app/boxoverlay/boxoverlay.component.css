@@ -60,9 +60,33 @@ height: 50px;
 background-color: var(--overlayColor);
 flex-grow: 1;
 font-size: large;
-
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 
 }
+.boxtopbuttonadd{
+
+width: 20px;
+height: 20px;
+align-self: flex-end;
+margin: 10px;
+
+position:absolute
+
+}
+
+.boxtopbuttonsub{
+
+    width: 20px;
+    height: 20px;
+    align-self: flex-end;
+    margin: 10px;
+    margin-top: 40px;
+    position:absolute
+    
+    }
+
 .slotsides{
 
 display: flex;
@@ -100,6 +124,9 @@ display: flex;
     width: 80px;
     z-index: 2;
     padding-inline: 5px;
+    margin-top: -0.5px;
+    margin-bottom: -0.5px;
+
 
 }
 .filler{
@@ -107,6 +134,7 @@ display: flex;
     background-color: var(--overlayColor);
     flex-grow: 1;
     min-height: 40px;
+    margin: -0.5px;
 }
 .slotborder{
 

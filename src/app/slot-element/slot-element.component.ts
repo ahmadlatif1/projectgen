@@ -98,7 +98,7 @@ export class SlotElementComponent implements OnInit {
   @Input() winner:boolean=false;
 
   
-  duration=0.2
+  duration=0.15
 
   delay=0
 
@@ -123,7 +123,6 @@ export class SlotElementComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-   console.log("\n o"+this.getwinner())
    this.delay=this.order*(this.duration/2)
    this.duration=this.duration-this.duration*Number(this.winner)*(0.5)
 

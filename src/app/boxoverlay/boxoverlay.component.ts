@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, OnInit, SimpleChanges } from '@angular/core';
 import { map } from 'rxjs';
 import * as globals from '../globals';
 import { SlotElementComponent } from '../slot-element/slot-element.component';
@@ -12,18 +12,25 @@ import { SlotComponent } from '../slot/slot.component';
     <div class="border">
     <div class="boxbody">
     
-      <div class="boxtop"> THE PROJECT IDEA MACHINE</div>
-      
+      <div class="boxtop"> 
+        <p>THE PROJECT IDEA MACHINE</p>
 
-      <div class="slotbox" *ngFor="let stack of genstack, index as j">
+        <button type="button" class="boxtopbuttonadd" (click)="addclick(1)">+</button>    
+        <button type="button" class="boxtopbuttonsub" (click)="addclick(-1)">-</button>    
+
+
+      </div>
+      
+      
+      <div class="slotbox" *ngFor="let stack of genstack, index as j; trackBy: trackByFn">
         
 
       <div class="filler" *ngIf="j==1&&stack.length"></div>
 
 
          <div class="slotrowrow">
-           <div class="filler"  *ngIf="stack.length>1" ></div>
-            <div class="slotrow" *ngFor="let substack of stack; index as i">
+           <div class="filler"  *ngIf="stack.length>0" ></div>
+            <div class="slotrow" *ngFor="let substack of stack; index as i; trackBy: trackByFn">
               
               <div class="slotcolumn">{{substack[0]}}</div>
 
@@ -34,16 +41,16 @@ import { SlotComponent } from '../slot/slot.component';
 
             </div>
 
-            <div class="slotcolumn" *ngIf="stack.length>1" ></div>
+            <div class="slotcolumn" *ngIf="stack.length>0" ></div>
 
 
-            <div class="filler"  *ngIf="stack.length>1"></div>
+            <div class="filler"  *ngIf="stack.length>0"></div>
 
         </div>
 
       </div>
       <div class="boxbottom">
-        <button type="button" class="boxbutton" (click)="onclick()">GENERATE!</button>    
+        <button type="button" class="boxbutton" (click)="spinclick()">GENERATE!</button>    
 
       </div>
       
@@ -59,22 +66,35 @@ import { SlotComponent } from '../slot/slot.component';
 
 export class BoxoverlayComponent implements OnInit {
 
+
+  
+
+
+
   spinstatus:number=0;
 
+  @Input() slotcount=3;
 
   slots:string[][]=globals.machinedata.map(x=>x[1]);
   
+  machinedata=globals.machinedata.slice(0,this.slotcount);
 
-  onclick(){
-    this.spinstatus++
+
+
+  
+  constructor() { 
   }
 
-  machinedata=globals.machinedata.slice(0,6);
 
+  trackByFn(index: any, item: any) {
+    return index; // or item.id
+  }
   
 
 
-  genstack:string[][][][]=function(md:string[][][]){
+  genstack=this.splitstacks(this.machinedata);
+  
+  splitstacks(md:string[][][]){
 
     
 
@@ -84,10 +104,42 @@ export class BoxoverlayComponent implements OnInit {
 
      return [stacka, stackb]
 
-  }(this.machinedata)
+  }
 
 
-  constructor() { }
+  changeslotcount(num:number){
+
+    const newnum=this.slotcount+num;
+    
+    if(newnum<=6&&newnum>0){
+
+    this.slotcount=newnum;
+    return true;
+    }
+    else return false;
+    
+
+  }
+
+  spinclick(){
+    this.spinstatus++;
+
+    // console.log("\nSPINCLICK")
+
+  }
+  
+  addclick(count:number=0){
+
+    if(this.changeslotcount(count)){
+
+      this.machinedata=globals.machinedata.slice(0,this.slotcount);
+      this.genstack=this.splitstacks(this.machinedata);
+      this.spinstatus=0
+
+      console.log("\nADDCLICK "+this.spinstatus+"s")
+
+    }
+  }
 
   ngOnInit(): void {
    console.log()
