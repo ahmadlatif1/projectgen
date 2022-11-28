@@ -35,6 +35,7 @@ import { Component, OnInit, Input } from '@angular/core';
     }
     .winbox{
 
+      animation-fill-mode: forwards;
       opacity: 1;
       color:seashell;
 
@@ -51,18 +52,15 @@ import { Component, OnInit, Input } from '@angular/core';
         z-index:-1;
         top: -40px;
 
-      color:rgb(255,255,255, 0.0);
+      color:rgb(255,255,255, 0.2);
 
-      }
-      50%{
-        color:rgb(255,255,255, 0.4);
       }
       100% {      
 
         z-index:-1;
         top: 40px;
         opacity: 1;
-        color:rgb(255,255,255, 0);
+        color:rgb(255,255,255, 0.2);
 
       }
     }

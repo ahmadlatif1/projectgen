@@ -27,9 +27,12 @@ import { SlotComponent } from '../slot/slot.component';
               <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
               </div>
 
-              <div class="slotcolumn" *ngIf="i==substack.length"></div>
 
             </div>
+
+            <div class="slotcolumn"></div>
+
+
             <div class="filler"></div>
 
         </div>
@@ -63,7 +66,7 @@ export class BoxoverlayComponent implements OnInit {
     this.spinstatus++
   }
 
-  machinedata=globals.machinedata.slice(0,6);
+  machinedata=globals.machinedata.slice(0,3);
 
   
 
