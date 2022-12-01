@@ -21,42 +21,49 @@ import { SlotComponent } from '../slot/slot.component';
 
       </div>
       
-      
-      <div class="slotbox" *ngFor="let stack of genstack, index as j; trackBy: trackByFn">
-        
+      <div class="boxmid">
 
-      <div class="filler" *ngIf="j==1&&stack.length"></div>
+      <div class="fillerheightless"></div>
 
 
-         <div class="slotrowrow">
-           <div class="filler"  *ngIf="stack.length>0" ></div>
-            <div class="slotrow" *ngFor="let substack of stack; index as i; trackBy: trackByFn">
-              
-              <div class="slotcolumn">{{substack[0]}}</div>
+        <div class="slotbox" *ngFor="let stack of genstack, index as j; trackBy: trackByFn">
+          
+        <div class="filler" *ngIf="j>0&&stack.length"></div>
 
-              <div class="slotborder">
-              <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
+
+          <div class="slotrowrow">
+            <div class="filler"  *ngIf="stack.length>0" ></div>
+              <div class="slotrow" *ngFor="let substack of stack; index as i; trackBy: trackByFn">
+                
+                <div class="slotcolumn">{{substack[0]}}</div>
+
+                <div class="slotborder">
+                <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
+                </div>
+
+
               </div>
 
-
-            </div>
-
-            <div class="slotcolumn" *ngIf="stack.length>0" ></div>
+              <div class="slotcolumn" *ngIf="stack.length>0" ></div>
 
 
-            <div class="filler"  *ngIf="stack.length>0"></div>
+              <div class="filler"  *ngIf="stack.length>0"></div>
+
+          </div>
 
         </div>
 
+        <div class="fillerheightless"></div>
+
       </div>
+      
       <div class="boxbottom">
         <button type="button" class="boxbutton" (click)="spinclick()">GENERATE!</button>    
 
       </div>
       
       
-      </div>
-      
+  </div>
   </div>
 `,
 
@@ -75,7 +82,6 @@ export class BoxoverlayComponent implements OnInit {
 
   @Input() slotcount=3;
 
-  slots:string[][]=globals.machinedata.map(x=>x[1]);
   
   machinedata=globals.machinedata.slice(0,this.slotcount);
 
