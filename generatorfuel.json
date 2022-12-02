@@ -1,9 +1,9 @@
 [
-    [["a"],["website","app","platform","utility tool","game","script"]],
-    [["in"],["javascript","java","machine code","pen and paper","python"]],
-    [["for"],["old people","children","developers","teachers","plumbers","You!"]],
-    [["within"],["24 hours","23hours","month","two weeks"]],
-    [["comp time"],["<10 seconds","<1 second"]],
-    [["handicap"],["one hand","no IDE","only terminal"]]
+    [["subject","a","premise"],["website","app","platform","utility tool","game","script"]],
+    [["language","in","main language to write in"],["javascript","java","machine code","pen and paper","python"]],
+    [["target","for","who it's directed to"],["old people","children","developers","teachers","plumbers","You!"]],
+    [["deadline","within","how much time to make"],["24 hours","23hours","month","two weeks"]],
+    [["comp time","that runs in","loading time"],["<10 seconds","<1 second"]],
+    [["handicap","but","extra spice"],["one hand","no IDE","only terminal"]]
 
 ]

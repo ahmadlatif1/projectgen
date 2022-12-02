@@ -35,7 +35,7 @@ import { SlotComponent } from '../slot/slot.component';
             <div class="filler"  *ngIf="stack.length>0" ></div>
               <div class="slotrow" *ngFor="let substack of stack; index as i; trackBy: trackByFn">
                 
-                <div class="slotcolumn">{{substack[0]}}</div>
+                <div class="slotcolumn">{{substack[0][0]}}</div>
 
                 <div class="slotborder">
                 <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
