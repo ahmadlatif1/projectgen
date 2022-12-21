@@ -15,9 +15,6 @@ import { SlotComponent } from '../slot/slot.component';
       <div class="boxtop"> 
         <p>THE PROJECT IDEA MACHINE</p>
 
-        <button type="button" class="boxtopbuttonadd" (click)="addclick(1)">+</button>    
-        <button type="button" class="boxtopbuttonsub" (click)="addclick(-1)">-</button>    
-
 
       </div>
       
@@ -37,9 +34,7 @@ import { SlotComponent } from '../slot/slot.component';
                 
                 <div class="slotcolumn">{{substack[0][0]}}</div>
 
-                <div class="slotborder">
                 <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
-                </div>
 
 
               </div>
@@ -58,9 +53,43 @@ import { SlotComponent } from '../slot/slot.component';
       </div>
       
       <div class="boxbottom">
-        <button type="button" class="boxbutton" (click)="spinclick()">GENERATE!</button>    
 
-      </div>
+        <div class="boxbottomcontainer" >
+
+          
+          <div *ngIf="!editmode; then thenBlock else elseBlock"></div>
+
+
+          <ng-template #thenBlock>
+
+          <div class="resultdisplay"></div>
+
+          <button type="button" class="boxbutton" (click)="spinclick()">GENERATE!</button>    
+
+          </ng-template>
+
+          
+          <ng-template #elseBlock>
+
+            <div class="togglecontainer">
+              <button class="edittogglebutton"  *ngFor="let slot of slotselectors; index as i" (click)="toggleslot(i)" [style.background-color]="selected_slots[i][0]? 'rgb(100, 100, 100)':'rgb(192, 192, 192)'" [style.border-style]="selected_slots[i][0]? 'inset' :'outset'">{{slot[0]}}</button>
+            </div>
+
+
+          </ng-template>
+
+
+
+          
+        </div>
+
+        
+        <button type="button" class="editbutton" (click)="toggleedit()">edit</button>    
+
+
+
+        </div>
+
       
       
   </div>
@@ -80,16 +109,27 @@ export class BoxoverlayComponent implements OnInit {
 
   spinstatus:number=0;
 
-  @Input() slotcount=3;
+  editmode=false;
 
   
-  machinedata=globals.machinedata.slice(0,this.slotcount);
+  machinedata=globals.machinedata;
 
+  selected_slots=this.machinedata.map(x=>[true,x])
+
+
+
+
+
+
+  slotselectors=this.machinedata.map(x=>x[0]);
 
 
   
   constructor() { 
   }
+
+
+
 
 
   trackByFn(index: any, item: any) {
@@ -98,9 +138,9 @@ export class BoxoverlayComponent implements OnInit {
   
 
 
-  genstack=this.splitstacks(this.machinedata);
+  genstack=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
   
-  splitstacks(md:string[][][]){
+  splitstacks(md:any){
 
     
 
@@ -113,42 +153,34 @@ export class BoxoverlayComponent implements OnInit {
   }
 
 
-  changeslotcount(num:number){
-
-    const newnum=this.slotcount+num;
-    
-    if(newnum<=6&&newnum>0){
-
-    this.slotcount=newnum;
-    return true;
-    }
-    else return false;
-    
-
-  }
-
   spinclick(){
     this.spinstatus++;
 
-    // console.log("\nSPINCLICK")
+  }
+  
+  toggleedit(){
+
+    this.editmode=!this.editmode
+    this.spinstatus=0
+  }
+
+  toggleslot(index:number){
+
+    this.selected_slots[index][0]=!this.selected_slots[index][0];
+
+    
+    this.genstack=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
+  
 
   }
   
-  addclick(count:number=0){
-
-    if(this.changeslotcount(count)){
-
-      this.machinedata=globals.machinedata.slice(0,this.slotcount);
-      this.genstack=this.splitstacks(this.machinedata);
-      this.spinstatus=0
-
-      console.log("\nADDCLICK "+this.spinstatus+"s")
-
-    }
-  }
-
   ngOnInit(): void {
    console.log()
+
+    
+
+
+
   }
 
 }
