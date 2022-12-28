@@ -17,7 +17,6 @@ import { SlotComponent } from '../slot/slot.component';
       <div class="boxtop"> 
         <p class="boxtoptitle">PROJECT IDEA GENERATOR</p>
 
-
       </div>
       
       <div class="boxmid">
