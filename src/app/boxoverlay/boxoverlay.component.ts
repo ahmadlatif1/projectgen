@@ -10,10 +10,12 @@ import { SlotComponent } from '../slot/slot.component';
   template: `
   
     <div class="border">
+    <div class="border2">
+
     <div class="boxbody">
     
       <div class="boxtop"> 
-        <p>THE PROJECT IDEA MACHINE</p>
+        <p class="boxtoptitle">PROJECT IDEA GENERATOR</p>
 
 
       </div>
@@ -23,7 +25,7 @@ import { SlotComponent } from '../slot/slot.component';
       <div class="fillerheightless"></div>
 
 
-        <div class="slotbox" *ngFor="let stack of genstack, index as j; trackBy: trackByFn">
+        <div class="slotbox" *ngFor="let stack of splitten_stacks, index as j; trackBy: trackByFn">
           
         <div class="filler" *ngIf="j>0&&stack.length"></div>
 
@@ -32,7 +34,7 @@ import { SlotComponent } from '../slot/slot.component';
             <div class="filler"  *ngIf="stack.length>0" ></div>
               <div class="slotrow" *ngFor="let substack of stack; index as i; trackBy: trackByFn">
                 
-                <div class="slotcolumn">{{substack[0][0]}}</div>
+                <div class="slotcolumn">{{substack[0][1]}}</div>
 
                 <app-slot [id]="i+(j*3)" [spinstatus]="spinstatus" [words]="substack[1]"></app-slot>
 
@@ -62,9 +64,8 @@ import { SlotComponent } from '../slot/slot.component';
 
           <ng-template #thenBlock>
 
-          <div class="resultdisplay"></div>
 
-          <button type="button" class="boxbutton" (click)="spinclick()">GENERATE!</button>    
+          <button type="button" class="boxbutton" (click)="spinclick()">press me</button>    
 
           </ng-template>
 
@@ -91,7 +92,7 @@ import { SlotComponent } from '../slot/slot.component';
         </div>
 
       
-      
+  </div>
   </div>
   </div>
 `,
@@ -103,26 +104,42 @@ import { SlotComponent } from '../slot/slot.component';
 export class BoxoverlayComponent implements OnInit {
 
 
-  
+  //supposed to be the combining component for all pieces
+
+  // on spin button click:
+  // -changes spinstatus by +1
+  //   -slots detect binded propery change, spawn their element arrays in position-dependant sizes, making animations finish one by one
+  //
+  // on edit button click:
+  //    -toggles an ngif to display a box containing all settings to toggle
+  //
+  //    on toggle click:
+  //      -disables the one slot, and remakes the main stack to acount for the change
+  //
 
 
+
+
+
+
+
+
+  // +----+ need to move what can be moved to independant component
 
   spinstatus:number=0;
 
   editmode=false;
 
+    //slots that are toggled
+  selected_slots=globals.generator_data.map(x=>[false,x])
+
+    //array of the titles that represent slots
+  slotselectors=globals.generator_data.map(x=>x[0]);
+
   
-  machinedata=globals.machinedata;
+  splitten_stacks=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
 
-  selected_slots=this.machinedata.map(x=>[true,x])
-
-
-
-
-
-
-  slotselectors=this.machinedata.map(x=>x[0]);
-
+  // +----+
 
   
   constructor() { 
@@ -132,53 +149,74 @@ export class BoxoverlayComponent implements OnInit {
 
 
 
+  
   trackByFn(index: any, item: any) {
     return index; // or item.id
   }
+
+  // +----+ many of these should be moved
   
-
-
-  genstack=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
-  
-  splitstacks(md:any){
-
+  // splits one stack into two to be used for each line in display
+  //
+  // keeps a balance between top and bottom arrays between 3,2 lengths
+  splitstacks(inputarray:any){
     
 
-    const stacka:string[][][]=function(){if(md.length<=3)return md; else if(md.length==4){return md.slice(0,2)}else return md.slice(0,3)}()
+    const stacka:string[][][]=function(){if(inputarray.length<=3)return inputarray; else if(inputarray.length==4){return inputarray.slice(0,2)}else return inputarray.slice(0,3)}()
 
-    const stackb:string[][][]=function(){if(md.length<=3)return []; else if(md.length==4)return md.slice(2,4);else return md.slice(3,6)}()
+    const stackb:string[][][]=function(){if(inputarray.length<=3)return []; else if(inputarray.length==4)return inputarray.slice(2,4);else return inputarray.slice(3,6)}()
 
      return [stacka, stackb]
 
   }
 
 
+  // the generate button
+  //spinstatus is a number as to update the spin variable every time it clicks, workaround for avoiding event emitters
   spinclick(){
     this.spinstatus++;
 
   }
   
+  //edit button
   toggleedit(){
 
     this.editmode=!this.editmode
-    this.spinstatus=0
   }
 
+
+  //toggles what slot boxes to be shown
   toggleslot(index:number){
+
+    this.spinstatus=0
 
     this.selected_slots[index][0]=!this.selected_slots[index][0];
 
     
-    this.genstack=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
+    this.splitten_stacks=this.splitstacks(this.selected_slots.filter(x=>x[0]==true).map(x=>x[1]));
   
 
   }
+
+  toggleslots(index_array:number[]){
+
+    for(let index of index_array){
+
+      this.toggleslot(index)
+    }
+  }
+
+
+
+  //+----+
+
   
   ngOnInit(): void {
-   console.log()
 
     
 
+    //default slots enabled 
+    this.toggleslots([0,1,2,3,5])
 
 
   }

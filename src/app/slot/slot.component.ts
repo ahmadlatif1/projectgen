@@ -16,12 +16,20 @@ import * as globals from '../globals';
 })
 export class SlotComponent implements OnInit {
 
+
+  // this component represents a slot, it spawns a bunch of slot elements on spin click
+
+  // position of slot in the stack (id), decides how many elements it spawns, making a sequential display of spin animations
+
+
+
+
   @Input() id: number=0;
   @Input() words: string[]=[""];
 
   @Input() spinstatus: number=0;
 
-  @Input() spun:boolean=false;
+  spun:boolean=false;
 
   spinlist:string[]=[""]
 
@@ -38,7 +46,8 @@ export class SlotComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
 
-
+    // workaround for event detection, subsequent spins disable first spin, 
+    //   spins worked weirdly with booleans and change detection after multiple spins so switched to this
 
     for (const propName in changes) {
 
@@ -51,7 +60,6 @@ export class SlotComponent implements OnInit {
 
           this.spinlist=this.randomizewords(this.words,this.id)
           this.spun=true
-          // console.log(this.spun+" AAAAAAAAAAAAAAAAAAAAAAAAAA")
 
         }
 
@@ -66,20 +74,12 @@ export class SlotComponent implements OnInit {
 
 
 
-
-
-
   
 
-
-  randomword(){return this.words[ Math.floor(Math.random() * this.words.length) ]; }
-
-  
-
+  // makes an array of words to the specific size that is needed to animate on sequence
   randomizewords(words:string[]=[""], order:number=0){
       let x:string[]=[]
       for(let i=0;i<60+order*5;i++)x.push(words[ Math.floor(Math.random() * words.length) ]); 
-    // console.log(x.length+"\n AAAAAAAA")
       return x;
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import gfuel from '../../generatorfuel.json'
+import all from '../../generatorfuel.json'
 
 
-export const machinedata=gfuel//.flatMap(x=>x);
+export const generator_data=all
 
+//supposed to be a class to import all external information to

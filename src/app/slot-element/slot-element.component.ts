@@ -91,15 +91,21 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SlotElementComponent implements OnInit {
 
+  // on spawn, activates keyframe animation 
+
+
+
   @Input() word:string="";
 
   @Input() order:number=0;
   
   @Input() winner:boolean=false;
 
-  
+  // second value for how long it takes one element to finish
+  //
   duration=0.15
 
+  // how long an element has to wait for its turn to animate
   delay=0
 
   getwinner(){
@@ -123,6 +129,10 @@ export class SlotElementComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+  //  should be controlled from somewhere else, to adjust speeds
+
+
    this.delay=this.order*(this.duration/2)
    this.duration=this.duration-this.duration*Number(this.winner)*(0.5)
 
